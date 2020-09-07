@@ -1,5 +1,5 @@
 var svgWidth = 960;
-var svgHeight = 500;
+var svgHeight = 620;
 
 var margin = {
   top: 20,
@@ -102,6 +102,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     //add events
     circlesGroup.on("mouseover", toolTip.show)
     .on("mouseout", toolTip.hide);
+
   return circlesGroup;
 }
 
@@ -146,7 +147,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.smokes))
     .attr("r", 20)
-    .attr("fill", "gray")
+    .attr("fill", "#93dbcc")
     .attr("opacity", ".5");
 
     ////append initial text
@@ -165,14 +166,14 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
   var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
-  var hairLengthLabel = labelsGroup.append("text")
+  var incomeLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "income") // value to grab for event listener
     .classed("active", true)
     .text("Household Income ($)");
 
-  var albumsLabel = labelsGroup.append("text")
+  var ageLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "age") // value to grab for event listener
@@ -185,7 +186,7 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .classed("axis-text", true)
+    .classed("active", true)
     .text("Percent of Smokers");
 
   // updateToolTip function above csv import
@@ -221,18 +222,18 @@ d3.csv("assets/data/data.csv").then(function(censusData, err) {
 
         // changes classes to change bold text
         if (chosenXAxis === "age") {
-          albumsLabel
+          ageLabel
             .classed("active", true)
             .classed("inactive", false);
-          hairLengthLabel
+          incomeLabel
             .classed("active", false)
             .classed("inactive", true);
         }
         else {
-          albumsLabel
+          ageLabel
             .classed("active", false)
             .classed("inactive", true);
-          hairLengthLabel
+          incomeLabel
             .classed("active", true)
             .classed("inactive", false);
         }
